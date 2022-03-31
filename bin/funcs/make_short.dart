@@ -1,14 +1,23 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:alfred/alfred.dart';
 
+import '../links/shorted_links.dart';
 import '../model/link_model.dart';
 
 Future<Map<String, dynamic>> makeShort(HttpRequest req) async {
   var _body = await req.first;
   var _firstDec = utf8.decode(_body);
   String link = jsonDecode(_firstDec)['link'];
-  var _cleaned = link.replaceAll(r'.com', r'');
-  String code = base64Encode(utf8.encode(_cleaned));
-  String shortLink = 'https://grisoft/' + code;
-  return LinkModel(originalLink: 'http://' + link, shortLink: shortLink, code: code).toJson();
+  var code = getRandomString(5);
+  var shortLink = req.requestedUri.origin + '/' + code;
+  var _model = LinkModel(originalLink: 'http://' + link, shortLink: shortLink, code: code);
+  shortedLinks.add(_model);
+  return _model.toJson();
 }
+
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+Random _rnd = Random();
+
+String getRandomString(int length) =>
+    String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

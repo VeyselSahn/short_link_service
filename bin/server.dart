@@ -1,19 +1,27 @@
 import 'dart:io';
 
 import 'package:alfred/alfred.dart';
-
-import 'routes/general_routes.dart';
+import 'funcs/get_original.dart';
+import 'funcs/make_short.dart';
+import 'model/html_model.dart';
 
 void main() async {
   final app = Alfred();
 
+  app.get('/:code', (req, res) {
+    if (req.params['code'] != null) {
+      var _link = getOriginal(req);
+      if (_link != null) {
+        res.headers.contentType = ContentType.html;
+        return htmlModel(_link);
+      } else {
+        return 'Not Found Bro';
+      }
+    }
+  });
+  app.post('/short', (req, res) => makeShort(req));
+
   final envPort = Platform.environment['PORT'];
 
-  final server = await app.listen(envPort != null ? int.parse(envPort) : 8080);
-  await for (var req in server) {
-    var _response = await startResponse(req);
-    req.response.write(_response);
-    await req.response.flush();
-    await req.response.close();
-  }
+  await app.listen(envPort != null ? int.parse(envPort) : 8080);
 }

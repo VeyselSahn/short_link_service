@@ -1,0 +1,3 @@
+myfunc() {
+  print('object');
+}
