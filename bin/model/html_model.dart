@@ -14,7 +14,7 @@ div {text-align: center;}
 <h3>$link</h3>
 <div class="container">
   <div class="vertical-center">
-    <button onClick = "">Go to Link</button>
+<button title="button title" class="action primary tocart" onclick=" window.open('$link', '_blank'); return false;">Open Link</button>
   </div>
 </div>
 

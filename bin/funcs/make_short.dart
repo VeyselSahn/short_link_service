@@ -12,6 +12,12 @@ Future<Map<String, dynamic>> makeShort(HttpRequest req) async {
   var code = getRandomString(5);
   var shortLink = req.requestedUri.origin + '/' + code;
   var _model = LinkModel(originalLink: 'http://' + link, shortLink: shortLink, code: code);
+
+  //
+  if (shortedLinks.length > 10) {
+    shortedLinks.clear();
+    shortedLinks.add(basic);
+  }
   shortedLinks.add(_model);
   return _model.toJson();
 }
