@@ -23,3 +23,13 @@ div {text-align: center;}
 
 ''';
 }
+
+String mainHtml() {
+  return ''' <h1>
+  Welcome the server
+</h1>
+<h2>
+  This server made for interview challenge
+  
+</h2>''';
+}

@@ -24,7 +24,11 @@ void main() async {
     }
   });
   app.post('/short', (req, res) => makeShort(req));
+  app.get('/', (req, res) {
+    res.headers.contentType = ContentType.html;
 
+    return mainHtml();
+  });
   final envPort = Platform.environment['PORT'];
 
   await app.listen(envPort != null ? int.parse(envPort) : 8080);
