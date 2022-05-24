@@ -29,7 +29,7 @@ String mainHtml() {
   Welcome the server
 </h1>
 <h2>
-  This server made for interview challenge
+  Basic shorten link service
   
 </h2>''';
 }
